@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<h1>Detail HTML</h1>
+
+
+	<p>{{appointment.user}}, {{appointment.date}} {{appointment.section}} {{appointment.timeslot}}</p>
+	<a class='btn btn-primary' href="{% url 'appointments:appointment_update' pk=appointment.pk %}">Update</a>
+	<a class='btn btn-primary' href="{% url 'appointments:appointment_delete' pk=appointment.pk %}">Delete</a>
+{% endblock %}

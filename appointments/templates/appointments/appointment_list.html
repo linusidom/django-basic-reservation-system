@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<h1>List HTML</h1>
+
+{%if appointment_list %}
+{% for appointment in appointment_list %}
+	<p><a href="{% url 'appointments:appointment_detail' pk=appointment.pk %}">{{appointment.user}}, {{appointment.date}} {{appointment.section}} {{appointment.timeslot}}</a></p>
+	{% endfor %}
+	{% else %}
+	<p>No Appointments <a href="{% url 'appointments:appointment_create' %}">Create One</a></p>
+	{% endif %}
+{% endblock %}
