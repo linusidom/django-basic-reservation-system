@@ -1,9 +1,20 @@
 {% extends 'base.html' %}
 {% block body_block %}
-<h1>Detail HTML</h1>
+<section id='main' class='appt_details'>
+	<h1>Appointment Details</h1>
 
+	<p><a href="{% url 'accounts:account_detail' pk=user.pk %}">@{{appointment.user}}</a></p>
+	<p>Date: {{appointment.date}} 
+	<p>Section: {{appointment.section}}</p>
+	<p>Counter: {{appointment.counter}}</p>
+	<p>Time: {{appointment.time}}</p>
+	<p>Reason: {{appointment.purpose}}</p>
+	<p>Files: {{appointment.document}}</p>
 
-	<p>{{appointment.user}}, {{appointment.date}} {{appointment.section}} {{appointment.timeslot}}</p>
 	<a class='btn btn-primary' href="{% url 'appointments:appointment_update' pk=appointment.pk %}">Update</a>
-	<a class='btn btn-primary' href="{% url 'appointments:appointment_delete' pk=appointment.pk %}">Delete</a>
+
+	<a class='btn btn-danger' href="{% url 'appointments:appointment_delete' pk=appointment.pk %}">Delete</a>
+
+	<a class='btn btn-info' href="{% url 'password_change' %}">Change Password</a>
+</section>
 {% endblock %}

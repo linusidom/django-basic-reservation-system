@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from reservationsystem import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,4 +25,16 @@ urlpatterns = [
  	url(r'^loggedout', views.LoggedOutTemplateView.as_view(), name='loggedout'),
     url(r'^$', views.IndexTemplateView.as_view(), name='index'),
     url(r'^appt/', include('appointments.urls', namespace='appointments')),
+
+
+    url(r'^change_password/$', auth_views.PasswordChangeView.as_view(), name='password_change'),
+    url(r'^change_password_done/$', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+    url(r'^password_reset/$', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    url(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+    url(r'^login/$', auth_views.LoginView.as_view(template_name='login.html'), name = 'user_login'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(), name = 'user_logout'),
+
 ]

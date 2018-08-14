@@ -1,16 +1,15 @@
-from django.conf.urls import url
-from django.contrib.auth import views as auth_views
+# from django.urls import path, re_path
 from accounts import views
+from django.conf.urls import url
 
-app_name = 'accounts'
 
-urlpatterns = [
-    # Accounts
-    url(r'^signup/$', views.SignUpCreateView.as_view(), name='signup'),
-    url(r'^login/$', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='user_login'),
-    url(r'^logout/$', auth_views.LogoutView.as_view(), name='user_logout'),
-    url(r'^update/(?P<pk>\d+)/$', views.AccountUpdateView.as_view(), name='account_update'),
-    url(r'^delete/(?P<pk>\d+)/$', views.AccountDeleteView.as_view(), name='account_delete'),
-    url(r'^detail/(?P<pk>\d+)/$', views.AccountDetailView.as_view(), name='account_detail'),
+app_name='accounts'
+
+urlpatterns=[
+	url(r'^$',views.IndexTemplateView.as_view(), name = 'index'),
+	url(r'^signup/$',views.signup, name = 'signup'),
+	url(r'^detail/(?P<pk>\d+)/$',views.ProfileDetailView.as_view(), name = 'profile_detail'),
+	url(r'^update/(?P<pk>\d+)/$',views.update_profile, name = 'profile_update'),
+	url(r'^delete/(?P<pk>\d+)/$',views.ProfileDeleteView.as_view(), name = 'profile_delete'),
 
 ]

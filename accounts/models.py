@@ -1,19 +1,15 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import models
-from django.shortcuts import reverse
-from django.contrib.auth.models import User
+
 # Create your models here.
+from django.contrib.auth.models import AbstractUser
+from django.shortcuts import reverse
 
-# class Profile(models.Model):
-# 	user = models.ForeignKey(User)
-# 	timeslot = models.DateTimeField(null=True, blank=True)
-# 	section = models.ForeignKey(Section, null=True, blank=True)
-# 	purpose = models.TextField(null=True, blank=True)
+class Profile(AbstractUser):
+	ideal_weight = models.IntegerField(default=185)
 
-# 	def __str__(self):
-# 		return self.timeslot, self.purpose, self.section
+	def __str__(self):
+		return self.email
 
-# 	def get_absolute_url(self):
-# 		return reverse('accounts:account_detail', kwargs={'pk':self.pk})
+	def get_absolute_url(self):
+		return reverse('accounts:profile_detail', kwargs={'pk':pk})
+	

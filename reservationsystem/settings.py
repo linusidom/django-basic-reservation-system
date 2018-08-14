@@ -128,7 +128,17 @@ STATICFILES_DIRS = [STATIC_DIR,]
 
 LOGIN_REDIRECT_URL = 'loggedin'
 LOGOUT_REDIRECT_URL = 'loggedout'
-LOGIN_URL = 'accounts:user_login'
+LOGIN_URL = 'user_login'
 
-RESERVATIONS_MAX_ALLOWED = 1
-RESERVATIONS_PER_DAY = 1
+AUTH_USER_MODEL = 'accounts.Profile'
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'siliconvalleyenglishthailand@gmail.com'
+EMAIL_HOST_PASSWORD = 'frulcrkmspsimxkx'

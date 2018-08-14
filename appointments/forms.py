@@ -7,10 +7,11 @@ from appointments.models import Appointment
 
 
 class AppointmentForm(forms.ModelForm):
-
+    document = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    
     class Meta:
         model = Appointment
-        fields = ('section','date', 'timeslot', 'patient_name',)
+        fields = ('section','counter','date', 'timeslot', 'purpose','document')
         widgets = {
             'date': DateTimeWidget(
                 attrs={'id': 'date'}, usel10n=False, bootstrap_version=3,

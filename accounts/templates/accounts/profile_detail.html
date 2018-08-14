@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Detail HTML</h1>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if messages %}
+{% for message in messages %}
+	<li>{{message}}</li>
+	{% endfor %}
+{% endif %}
+
+<p>{{profile.username}}</p>
+<p>{{profile.email}}</p>
+<p>{{profile.ideal_weight}}</p>
+
+<a href="{% url 'accounts:profile_update' pk=user.pk %}">Update</a>
+
+<a href="{% url 'accounts:profile_delete' pk=user.pk %}">Delete</a>
+
+<a href="{% url 'password_change' %}">Change Password</a>
+{% endblock %}

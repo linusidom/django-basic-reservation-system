@@ -6,7 +6,7 @@ print(datetime.time())
 
 print(datetime.date.today())
 
-with open("./appointments/models.py") as fp:
+with open('./temp') as fp:
     for i, line in enumerate(fp):
         if "\xe2" in line:
             print(i, repr(line))

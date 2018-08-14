@@ -3,7 +3,7 @@ from appointments.models import Appointment, Counter, Section
 
 
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ['counter','section', 'date', 'timeslot', 'patient_name']
+    list_display = ['counter','section', 'date', 'timeslot', 'purpose']
     list_filter = ['counter', ]
 
 admin.site.register(Appointment, AppointmentAdmin)

@@ -36,6 +36,7 @@ header h1{
 /* --- menu --- */
 header .navbar {
 	overflow: hidden;
+	background-color: #000;
 }
 
 header .navbar a {
@@ -112,3 +113,35 @@ header .side-nav .home {
 	color: #1eab75;
 	font-weight: bold;
 }
+
+section{
+	padding: 20px 80px 20px 30px;
+}
+
+
+/*.login label,
+.signup label 
+{
+	width: 200px;
+	margin: 0 auto;
+}
+
+.login input,
+.signup input 
+*/
+form input,
+form label {
+	width: 200px;
+	margin: 0 auto;
+}
+
+.signup li{
+	list-style: none;
+	margin: 0px 0px 0px 80px;
+	font-size: 12px;
+}
+
+.signup .helptext {
+	font-size: 12px;
+}
+

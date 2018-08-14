@@ -1,45 +1,49 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.shortcuts import render
-from django.contrib.auth.models import User
-from accounts.forms import UserForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import (TemplateView, DetailView,
-                                CreateView, UpdateView, DeleteView)
-from django.core.urlresolvers import reverse_lazy
-
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 # Create your views here.
+from django.views.generic import (TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView)
+from accounts.models import Profile
+from accounts.forms import ProfileForm, ProfileUpdateForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
-class SignUpCreateView(CreateView):
-    model = User
-    form_class = UserForm
-    template_name = 'accounts/signup.html'
-    success_url = reverse_lazy('accounts:user_login')
+class IndexTemplateView(TemplateView):
+	template_name='accounts/index.html'
 
-class AccountDetailView(LoginRequiredMixin, DetailView):
-    login_url = 'accounts:user_login'
-    model = User
-    template_name = 'accounts/account_detail.html'
+def signup(request):
+	if request.method == 'POST':
+		form = ProfileForm(request.POST)
+		if form.is_valid():
+			profile = form.save(commit=False)
+			profile.username = profile.email
+			profile.save()
+			return redirect('user_login')
+	else:
+		form = ProfileForm()
+	return render(request, 'accounts/signup.html', {'form': form})
 
-    def get_queryset(self):
-        userpk = self.request.user.pk
-        queryset = User.objects.filter(pk=userpk)
-        return queryset
+def update_profile(request, pk):
+	if request.method == 'POST':
+		form = ProfileUpdateForm(request.POST, instance=request.user)
+		if form.is_valid():
+			profile = form.save(commit=False)
+			profile.username = profile.email
+			profile.save()
+			messages.add_message(request, messages.INFO, 'Success, Profile Updated!')
+			return redirect('accounts:profile_detail', pk=pk)
+		else:
+			return HttpResponse(form.errors)
+	else:
+		form = ProfileUpdateForm(instance=request.user)
+	return render(request, 'accounts/profile_form.html', {'form': form})
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+	model = Profile
 
-class AccountUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
-    form_class = UserForm
-    login_url = 'accounts:user_login'
-    template_name = 'accounts/account_form.html'
+	def get_queryset(self):
+		user = self.request.user.pk
+		queryset = Profile.objects.filter(pk=user)
+		return queryset
 
-    def get_queryset(self):
-        userpk = self.request.user.pk
-        queryset = User.objects.filter(pk=userpk)
-        return queryset
-
-class AccountDeleteView(LoginRequiredMixin, DeleteView):
-    model = User
-    success_url = reverse_lazy('accounts:user_login')
-    login_url = 'accounts:user_login'
-    template_name = 'accounts/account_confirm_delete.html'
+class ProfileDeleteView(LoginRequiredMixin, DeleteView):
+	model = Profile
+	success_url = reverse_lazy('index')
